@@ -1,5 +1,6 @@
 {
 	"rangeStrategy": "pin",
+	"dependencyDashboard": true,
 	"baseBranches": ["dependency-updates"],
 	"packageRules": [
 		{
