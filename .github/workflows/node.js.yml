@@ -2,8 +2,8 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-name: Node.js CI
-
+name: Application Build
+description: Checks for the proper build and test functionality
 on:
   push:
     branches: [ main ]
@@ -11,47 +11,29 @@ on:
     branches: [ main ]
 
 jobs:
+  strategy:
+  matrix:
+    node-version:
+      - 16.x
+    os:
+      - ubuntu-latest
+      - windows-latest
+      - macos-latest
   build-backend:
     runs-on: ${{matrix.os}}
-
-    # defaults:
-    #   run:
-    #     working-directory: 'server'
-
-    strategy:
-      matrix:
-        node-version:
-          - 16.x
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
-
+    environment: production
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-    # - name: Get npm cache directory
-      # id: npm-cache-dir
-    #   run: |
-    #     echo "::set-output name=dir::$(npm config get cache)"
-    # - uses: actions/cache@v3
-    #   id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-    #   with:
-    #   path: ${{ steps.npm-cache-dir.outputs.dir }}
-    #   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    #   restore-keys: |
-    #     ${{ runner.os }}-node-
-
-      # working-directory: 'server'
-    - name: setup environment
-      # if: steps.npm-cache.outputs.cache-hit != 'true'
-      working-directory: 'server'
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
+      - uses: ./.github/workflows/build-and-test
+        with:
+          os: ${{matrix.os}}
+          node-v: ${{matrix.os}}
+          workdir: 'server'
+  build-frontend:
+    runs-on: ${{matrix.os}}
+    environment: production
+    steps:
+      - uses: ./.github/workflows/build-and-test
+        with:
+          os: ${{matrix.os}}
+          node-v: ${{matrix.os}}
+          workdir: 'client'
