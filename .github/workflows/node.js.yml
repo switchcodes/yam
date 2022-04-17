@@ -1,5 +1,6 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
 name: Node.js CI
 
@@ -12,40 +13,42 @@ on:
 jobs:
   build:
     runs-on: ${{matrix.os}}
+
     defaults:
       run:
         working-directory: 'server'
+
     strategy:
       matrix:
         node-version:
-          - 16
+          - 16.x
         os:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      run: |
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
         echo "::set-output name=dir::$(npm config get cache)"
-    - uses: actions/cache@v3
-      id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-      with:
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
         path: ${{ steps.npm-cache-dir.outputs.dir }}
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: setup environment
-      # working-directory: 'server'
-      if: steps.npm-cache.outputs.cache-hit != 'true'
-      run: npm ci
-      run: |
-        npm run build --if-present
-        npm test
+      - name: setup environment
+        # working-directory: 'server'
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+        run: |
+          npm run build --if-present
+          npm test
