@@ -30,16 +30,6 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
   build-backend:
     needs: setup
-    runs-on: ${{matrix.os}}
-    environment: production
-    strategy:
-      matrix:
-        node-version:
-          - 16.x
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
     uses: ./.github/workflows/build-and-test.yml
     with:
       os: ${{matrix.os}}
@@ -47,16 +37,6 @@ jobs:
       workdir: 'server'
   build-frontend:
     needs: setup
-    runs-on: ${{matrix.os}}
-    environment: production
-    strategy:
-      matrix:
-        node-version:
-          - 16.x
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
     uses: ./.github/workflows/build-and-test.yml
     with:
       os: ${{matrix.os}}
