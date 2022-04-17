@@ -1,5 +1,6 @@
+# Build and Test Application
+
 name: Build and Test
-description: 'Build and Test Application'
 
 on:
   workflow_call:
