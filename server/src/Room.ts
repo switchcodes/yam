@@ -22,3 +22,4 @@ export default class Room {
 		throw new Error("addAI() not implemented.");
 	};
 }
+
