@@ -41,7 +41,7 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - uses: ./.github/workflows/build-and-test
+      - uses: ./.github/workflows/build-and-test.yml
         with:
           os: ${{matrix.os}}
           node-v: ${{matrix.node-version}}
@@ -59,7 +59,7 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - uses: ./.github/workflows/build-and-test
+      - uses: ./.github/workflows/build-and-test.yml
         with:
           os: ${{matrix.os}}
           node-v: ${{matrix.node-version}}
