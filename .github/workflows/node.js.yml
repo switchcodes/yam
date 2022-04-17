@@ -17,8 +17,8 @@ jobs:
         working-directory: 'server'
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
         node-version: [16.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: 'server/package-lock.json'
+        cache-dependency-path: '**/package-lock.json'
     - name: setup environment
       working-directory: 'server'
       run: |
