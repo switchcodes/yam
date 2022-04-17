@@ -27,12 +27,12 @@ jobs:
         node-version: ${{ inputs.node-v }}
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
-    - uses: ./.github/workflows/build-and-test.yml
+      uses: ./.github/workflows/build-and-test.yml
       with:
         os: ${{matrix.os}}
         node-v: ${{matrix.node-version}}
         workdir: 'server'
-    - uses: ./.github/workflows/build-and-test.yml
+      uses: ./.github/workflows/build-and-test.yml
       with:
         os: ${{matrix.os}}
         node-v: ${{matrix.node-version}}
