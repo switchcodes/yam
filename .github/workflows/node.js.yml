@@ -13,30 +13,24 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version:
-          - 16.x
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
-        dir:
-          - 'server'
-          - 'client'
+        node-version: [16.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        dir: ['server', 'client']
     steps:
-    - name: Setting up Node.js ${{ matrix.node-v }}
-    - uses: actions/checkout@v3
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-v }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-
-    - name: Build and Test ${{ matrix.dir }}
-      uses: ./.github/workflows/build-and-test.yml
-      with:
-        os: ${{ matrix.os }}
-        node-v: ${{ matrix.node-version }}
-        workdir: ${{ matrix.dir }}
+      - name: Setting up Node.js ${{ matrix.node-v }}
+      - uses: actions/checkout@v3
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-v }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+  
+      - name: Build and Test ${{ matrix.dir }}
+        uses: ./.github/workflows/build-and-test.yml
+        with:
+          os: ${{ matrix.os }}
+          node-v: ${{ matrix.node-version }}
+          workdir: ${{ matrix.dir }}
   # build-backend:
   #   needs: setup
 
