@@ -28,8 +28,7 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
 
       - name: Build and Test ${{ matrix.dir }}
-      
-        uses: switchcodes/yam/.github/actions/build-and-test.yml@main
+        uses: switchcodes/yam/.github/actions/build-and-test.yml
         with:
           os: ${{ matrix.os }}
           node-v: ${{ matrix.node-version }}
