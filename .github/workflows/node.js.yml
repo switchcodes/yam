@@ -11,29 +11,37 @@ on:
     branches: [ main ]
 
 jobs:
-  strategy:
-  matrix:
-    node-version:
-      - 16.x
-    os:
-      - ubuntu-latest
-      - windows-latest
-      - macos-latest
   build-backend:
     runs-on: ${{matrix.os}}
     environment: production
+    strategy:
+      matrix:
+        node-version:
+          - 16.x
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     steps:
       - uses: ./.github/workflows/build-and-test
         with:
           os: ${{matrix.os}}
-          node-v: ${{matrix.os}}
+          node-v: ${{matrix.node-version}}
           workdir: 'server'
   build-frontend:
     runs-on: ${{matrix.os}}
     environment: production
+    strategy:
+      matrix:
+        node-version:
+          - 16.x
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     steps:
       - uses: ./.github/workflows/build-and-test
         with:
           os: ${{matrix.os}}
-          node-v: ${{matrix.os}}
+          node-v: ${{matrix.node-version}}
           workdir: 'client'
