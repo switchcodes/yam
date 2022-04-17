@@ -15,7 +15,7 @@
 		"coverage": "vitest run --converage"
 	},
 	"devDependencies": {
-		"@swc/core": "1.2.165",
+		"@swc/core": "1.2.167",
 		"@types/express": "4.17.13",
 		"vite": "2.9.5",
 		"vite-plugin-node": "0.0.19",
