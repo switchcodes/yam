@@ -18,11 +18,9 @@ on:
         required: true
         default: '.'
 
-jobs:
-  perform-build:
-    name: Build and Test application
-    runs-on: ${{ inputs.os }}
-    steps:
+runs:
+  using: 'composite'
+  steps:
     - name: Install dependencies
       working-directory: ${{ inputs.workdir }}
       run: npm 
@@ -32,5 +30,9 @@ jobs:
     - name: Testing ${{ inputs.workdir }} App
       working-directory: ${{ inputs.workdir }}
       run: npm test
-      
+# jobs:
+#   perform-build:
+#     name: Build and Test application
+#     runs-on: ${{ inputs.os }}
+#     steps:
         
