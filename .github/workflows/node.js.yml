@@ -1,8 +1,6 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+# Checks for the proper build and test functionality
 
-name: Node.js CI
+name: Application Build
 
 on:
   push:
@@ -11,47 +9,29 @@ on:
     branches: [ main ]
 
 jobs:
-  build-backend:
+  setup-env:
     runs-on: ${{matrix.os}}
-
-    # defaults:
-    #   run:
-    #     working-directory: 'server'
-
+    name: Setup Environment
     strategy:
       matrix:
-        node-version:
-          - 16.x
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
-
+        node-version: [16.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        dir: ['server', 'client']
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-    # - name: Get npm cache directory
-      # id: npm-cache-dir
-    #   run: |
-    #     echo "::set-output name=dir::$(npm config get cache)"
-    # - uses: actions/cache@v3
-    #   id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-    #   with:
-    #   path: ${{ steps.npm-cache-dir.outputs.dir }}
-    #   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    #   restore-keys: |
-    #     ${{ runner.os }}-node-
-
-      # working-directory: 'server'
-    - name: setup environment
-      # if: steps.npm-cache.outputs.cache-hit != 'true'
-      working-directory: 'server'
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setting up Node.js ${{ matrix.node-v }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-v }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install dependencies
+        working-directory: ${{ matrix.dir }}
+        run: npm ci
+      - name: Building ${{ inputs.workdir }} App
+        working-directory: ${{ matrix.dir }}
+        run: npm run build --if-present
+      - name: Testing ${{ inputs.workdir }} App
+        working-directory: ${{ matrix.dir }}
+        run: npm test
