@@ -29,9 +29,9 @@ jobs:
       - name: Install dependencies
         working-directory: ${{ matrix.dir }}
         run: npm ci
-      - name: Building ${{ inputs.workdir }} App
+      - name: Building ${{ matrix.dir }} App
         working-directory: ${{ matrix.dir }}
         run: npm run build --if-present
-      - name: Testing ${{ inputs.workdir }} App
+      - name: Testing ${{ matrix.dir }} App
         working-directory: ${{ matrix.dir }}
         run: npm test
