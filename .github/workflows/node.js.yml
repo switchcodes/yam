@@ -11,7 +11,6 @@ on:
 jobs:
   setup:
     runs-on: ${{matrix.os}}
-    environment: production
     strategy:
       matrix:
         node-version:
@@ -28,17 +27,18 @@ jobs:
         node-version: ${{ inputs.node-v }}
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
-  build-backend:
-    needs: setup
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      os: ${{matrix.os}}
-      node-v: ${{matrix.node-version}}
-      workdir: 'server'
-  build-frontend:
-    needs: setup
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      os: ${{matrix.os}}
-      node-v: ${{matrix.node-version}}
-      workdir: 'client'
+    - uses: ./.github/workflows/build-and-test.yml
+      with:
+        os: ${{matrix.os}}
+        node-v: ${{matrix.node-version}}
+        workdir: 'server'
+    - uses: ./.github/workflows/build-and-test.yml
+      with:
+        os: ${{matrix.os}}
+        node-v: ${{matrix.node-version}}
+        workdir: 'client'
+  # build-backend:
+  #   needs: setup
+
+  # build-frontend:
+  #   needs: setup
