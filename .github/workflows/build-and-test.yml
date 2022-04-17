@@ -23,13 +23,15 @@ runs:
   steps:
     - name: Install dependencies
       working-directory: ${{ inputs.workdir }}
-      run: npm 
+    - run: npm ci
+
     - name: Building ${{ inputs.workdir }} App
       working-directory: ${{ inputs.workdir }}
-      run: npm run build --if-present
+    - run: npm run build --if-present
+
     - name: Testing ${{ inputs.workdir }} App
       working-directory: ${{ inputs.workdir }}
-      run: npm test
+    - run: npm test
 # jobs:
 #   perform-build:
 #     name: Build and Test application

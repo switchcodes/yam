@@ -23,13 +23,16 @@ jobs:
           - 'server'
           - 'client'
     steps:
+    - name: checkout
     - uses: actions/checkout@v3
+
     - name: Setting up Node.js ${{ matrix.node-v }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-v }}
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
+        
     - name: Build and Test ${{ matrix.dir }}
     - uses: ./.github/workflows/build-and-test.yml
       with:
