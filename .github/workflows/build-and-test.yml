@@ -23,13 +23,6 @@ jobs:
     name: Build and Test application
     runs-on: ${{ inputs.os }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Setting up Node.js ${{ inputs.node-v }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.node-v }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
     - name: Install dependencies
       working-directory: ${{ inputs.workdir }}
       run: npm 

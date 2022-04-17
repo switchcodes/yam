@@ -9,7 +9,16 @@ on:
     branches: [ main ]
 
 jobs:
+  setup:
+    - uses: actions/checkout@v3
+    - name: Setting up Node.js ${{ inputs.node-v }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-v }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
   build-backend:
+    needs: setup
     runs-on: ${{matrix.os}}
     environment: production
     strategy:
@@ -27,6 +36,7 @@ jobs:
           node-v: ${{matrix.node-version}}
           workdir: 'server'
   build-frontend:
+    needs: setup
     runs-on: ${{matrix.os}}
     environment: production
     strategy:
