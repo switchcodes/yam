@@ -40,12 +40,11 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-    steps:
-      - uses: ./.github/workflows/build-and-test.yml
-        with:
-          os: ${{matrix.os}}
-          node-v: ${{matrix.node-version}}
-          workdir: 'server'
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      os: ${{matrix.os}}
+      node-v: ${{matrix.node-version}}
+      workdir: 'server'
   build-frontend:
     needs: setup
     runs-on: ${{matrix.os}}
@@ -58,9 +57,8 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-    steps:
-      - uses: ./.github/workflows/build-and-test.yml
-        with:
-          os: ${{matrix.os}}
-          node-v: ${{matrix.node-version}}
-          workdir: 'client'
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      os: ${{matrix.os}}
+      node-v: ${{matrix.node-version}}
+      workdir: 'client'
