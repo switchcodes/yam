@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{matrix.os}}
     defaults:
       run:
-        working-directory: 'server'
+        working-directory: './server'
     strategy:
       matrix:
         node-version: [16.x]
@@ -30,9 +30,9 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './server/package-lock.json'
         
-    - name: setup environment
-      working-directory: 'server'
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
+#     - name: setup environment
+#       working-directory: 'server'
+#       run: |
+#         npm ci
+#         npm run build --if-present
+#         npm test
