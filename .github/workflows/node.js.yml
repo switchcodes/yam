@@ -31,8 +31,8 @@ jobs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
 
-    - name: Build and Test ${{ matrix.dir }}
-    - uses: ./.github/workflows/build-and-test.yml
+      name: Build and Test ${{ matrix.dir }}
+      uses: ./.github/workflows/build-and-test.yml
       with:
         os: ${{ matrix.os }}
         node-v: ${{ matrix.node-version }}

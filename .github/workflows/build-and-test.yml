@@ -23,7 +23,7 @@ runs:
   steps:
     - name: Install dependencies
       working-directory: ${{ inputs.workdir }}
-    - run: npm ci
+      run: npm ci
 
     - name: Building ${{ inputs.workdir }} App
       working-directory: ${{ inputs.workdir }}
