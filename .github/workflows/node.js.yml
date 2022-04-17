@@ -11,6 +11,7 @@ on:
 jobs:
   setup:
     runs-on: ${{matrix.os}}
+    name: Build and Test
     strategy:
       matrix:
         node-version: [16.x]
