@@ -1,8 +1,8 @@
 <script>
 	import Board from '$scripts/Board';
 	let gen = () => {
-		let board = new Board();
-		board.generate();
+		// let board = new Board();
+		// board.generate();
 	};
 </script>
 
