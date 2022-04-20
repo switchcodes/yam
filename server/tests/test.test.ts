@@ -5,9 +5,9 @@ import { LobbyState } from "../src/LobbyState";
 const lobby = new Lobby("testRoom", 5);
 
 test("LobbyTest", () => {
-	expect(() => lobby.getState()).toBe(LobbyState.CREATING);
-	expect(() => lobby.getMaxUsers()).toBe(5);
-	expect(() => lobby.getUser("test")).toBe(undefined);
+	expect(lobby.getState()).toBe(LobbyState.CREATING);
+	expect(lobby.getMaxUsers()).toBe(5);
+	expect(lobby.getUser("test")).toBe(undefined);
 	expect(lobby.addAI).toBeDefined();
 	expect(lobby.join).toBeDefined();
 	expect(lobby.leave).toBeDefined();
