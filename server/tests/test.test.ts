@@ -1,12 +1,17 @@
 import { assert, expect, test } from "vitest";
-import Room from "../src/Room";
-const room = new Room();
+import Lobby from "../src/Lobby";
+import { LobbyState } from "../src/LobbyState";
 
-test("RoomTestTest", () => {
-	expect(room.addAI).toBeDefined();
-	expect(room.join).toBeDefined();
-	expect(room.leave).toBeDefined();
-	expect(() => room.addAI()).toThrowError("addAI() not implemented.");
-	expect(() => room.join("")).toThrowError("addAI() not implemented.");
-	expect(() => room.leave("")).toThrowError("addAI() not implemented.");
+const lobby = new Lobby("testRoom", 5);
+
+test("LobbyTest", () => {
+	expect(() => lobby.getState()).toBe(LobbyState.CREATING);
+	expect(() => lobby.getMaxUsers()).toBe(5);
+	expect(() => lobby.getUser("test")).toBe(undefined);
+	expect(lobby.addAI).toBeDefined();
+	expect(lobby.join).toBeDefined();
+	expect(lobby.leave).toBeDefined();
+	expect(() => lobby.addAI()).toThrowError("addAI() not implemented.");
+	expect(() => lobby.join("")).toThrowError("addAI() not implemented.");
+	expect(() => lobby.leave("")).toThrowError("addAI() not implemented.");
 });
