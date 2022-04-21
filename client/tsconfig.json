@@ -1,3 +1,17 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json"
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			// "$/*": ["src/*"],
+			// "$lib": ["src/lib"],
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"],
+			// "$assets/*": ["src/assets/*"],
+			// "$assets": ["src/assets/index"],
+			"$scripts/*": ["src/scripts/*"],
+			"$scripts": ["src/scripts/index"]
+			// "$types": ["./src/types/index"]
+		}
+	}
 }
