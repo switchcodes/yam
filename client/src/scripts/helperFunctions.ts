@@ -5,9 +5,9 @@ import {
 	Vector3,
 	Scene,
 	WebGLRenderer,
-	PerspectiveCamera
-} from 'three';
-import type { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+	PerspectiveCamera,
+} from "three";
+import type { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 
 export function createLines(scene: Scene) {
 	const lineX = new Line(
@@ -46,7 +46,7 @@ export function addResize(
 	renderer: WebGLRenderer,
 	composer: EffectComposer
 ) {
-	window.addEventListener('resize', () => {
+	window.addEventListener("resize", () => {
 		const ratio = window.devicePixelRatio;
 		renderer.setPixelRatio(ratio);
 		// const el = document.getElementById("body");

@@ -1,12 +1,12 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from 'three';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 // import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
 // import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 // import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { createLines, addResize } from './helperFunctions.js';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { createLines, addResize } from "./helperFunctions.js";
 
 export default class Game {
 	screen: HTMLElement;
@@ -14,7 +14,8 @@ export default class Game {
 	camera: PerspectiveCamera;
 	renderer: WebGLRenderer;
 	composer: EffectComposer;
-	constructor(screen: HTMLElement) {
+	constructor(screen: HTMLElement | null) {
+		if (!screen) throw new Error("Screen needs to be defined in the DOM");
 		this.screen = screen;
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);

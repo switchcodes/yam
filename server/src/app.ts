@@ -5,21 +5,27 @@ import LobbyMananger from "./LobbyManager";
 import User from "./User";
 
 const app = express();
+// const httpServer = http.createServer(app);
+// const ioServer = new Server(httpServer, { transports: ["websocket"] });
+
+const domain = "localhost";
+const port = 3001;
 const httpServer = http.createServer(app);
-const ioServer = new Server(httpServer);
+httpServer.listen(port, domain);
+const ioServer = Server.listen(httpServer, { transports: ["websocket"] });
 
 let manager: LobbyMananger = new LobbyMananger();
 
 ioServer.on("connection", (socket) => {
-	manager.createLobby("testLobby",10);
+	manager.createLobby("testLobby", 10);
 
-	manager.getLobby("testLobby").addUser(new User("client_"+socket.handshake.address, socket));
+	manager.getLobby("testLobby").addUser(new User("client_" + socket.handshake.address, socket));
 
 	console.log("Lobbies", manager.lobbies);
 	console.log("Users", manager.lobbies[0].users);
 
-	socket.emit("Welcome " + manager.getLobby("testLobby").users[0].name, (response) => {
-		console.log(manager.getLobby("testLobby").users[0].name +" responded with: " + response);
+	socket.emit("msg", "Welcome " + manager.getLobby("testLobby").users[0].name, (response) => {
+		console.log(manager.getLobby("testLobby").users[0].name + " responded with: " + response);
 
 		manager.getLobby("testLobby").removeUser(manager.getLobby("testLobby").users[0]);
 
@@ -29,13 +35,15 @@ ioServer.on("connection", (socket) => {
 		manager.deleteLobby("testLobby");
 
 		console.log("Lobbies", manager.lobbies);
-		
+
 		socket.disconnect(true);
 	});
 });
 
 app.get("/", (req, res) => {
-	res.send("<div style='height:100%; width: 100%; display: grid; place-items: center;'><div style='height:100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;'><h1 style='font-size: 5em; font-weight: 600;'>Welcome to the Server API</h1><p style='font-size: 2em; font-weight: 200;'>Please connect to this server with the help of a (socket.io) socket connection.</p></div></div>");
+	res.send(
+		"<div style='height:100%; width: 100%; display: grid; place-items: center;'><div style='height:100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;'><h1 style='font-size: 5em; font-weight: 600;'>Welcome to the Server API</h1><p style='font-size: 2em; font-weight: 200;'>Please connect to this server with the help of a (socket.io) socket connection.</p></div></div>"
+	);
 });
 
 httpServer.listen(3000, () => {
