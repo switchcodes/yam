@@ -8,7 +8,7 @@ export default class NetworkManager {
 		this.socket = io(url, {
 			withCredentials: false,
 			reconnectionDelayMax: 10000,
-			authConnect: false,
+			// authConnect: false,
 			auth: {
 				token: "123",
 			},

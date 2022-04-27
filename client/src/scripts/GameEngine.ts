@@ -24,7 +24,7 @@ export default class Game {
 	camera: PerspectiveCamera;
 	renderer: WebGLRenderer;
 	composer: EffectComposer;
-	loader: TextureLoader;
+	// loader: TextureLoader;
 	constructor(screen: HTMLElement) {
 		// if (!screen) throw new Error("Screen needs to be defined in the DOM");
 		this.screen = screen;
