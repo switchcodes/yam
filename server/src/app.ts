@@ -6,7 +6,11 @@ import LobbyMananger from "./LobbyManager";
 import User from "./User";
 
 const app = express();
-app.use(cors());
+app.use(
+	cors({
+		origin: ["http://localhost:3000", "http://localhost:3001"],
+	})
+);
 const httpServer = http.createServer(app);
 const ioServer = new Server(httpServer, {
 	// transports: ["websocket"],
@@ -20,7 +24,7 @@ const ioServer = new Server(httpServer, {
 				"Access-Control-Allow-Headers": "my-custom-header",
 				"Access-Control-Allow-Credentials": true,
 			});
-			res.end();
+			res.end("ok");
 		},
 	},
 });
