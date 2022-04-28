@@ -1,4 +1,14 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
+import {
+	Scene,
+	PerspectiveCamera,
+	WebGLRenderer,
+	Vector2,
+	BoxGeometry,
+	MeshBasicMaterial,
+	Mesh,
+	TextureLoader,
+	SphereGeometry,
+} from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 // import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
@@ -14,8 +24,9 @@ export default class Game {
 	camera: PerspectiveCamera;
 	renderer: WebGLRenderer;
 	composer: EffectComposer;
-	constructor(screen: HTMLElement | null) {
-		if (!screen) throw new Error("Screen needs to be defined in the DOM");
+	// loader: TextureLoader;
+	constructor(screen: HTMLElement) {
+		// if (!screen) throw new Error("Screen needs to be defined in the DOM");
 		this.screen = screen;
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -33,6 +44,7 @@ export default class Game {
 		const renderPass = new RenderPass(this.scene, this.camera);
 		this.composer.addPass(renderPass);
 
+
 		// const fxaaPass = new ShaderPass(FXAAShader);
 		// this.composer.addPass(fxaaPass);
 
@@ -45,12 +57,17 @@ export default class Game {
 		bloomPass.threshold = 0;
 		bloomPass.strength = 1.5;
 		bloomPass.radius = 0.3;
-		this.composer.addPass(bloomPass);
+		// this.composer.addPass(bloomPass);
 
 		const controls = new OrbitControls(this.camera, this.renderer.domElement);
 		controls.maxPolarAngle = Math.PI * 0.5;
 		controls.minDistance = 1;
 		controls.maxDistance = 10;
+
+		// const geometry = new BoxGeometry(1, 1, 1);
+		// const material = new MeshBasicMaterial({ color: 0x00ff00 });
+		// const cube = new Mesh(geometry, material);
+		// this.scene.add(cube);
 
 		this.animate();
 	}

@@ -1,22 +1,46 @@
 import express from "express";
+import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 import LobbyMananger from "./LobbyManager";
 import User from "./User";
 
 const app = express();
-// const httpServer = http.createServer(app);
-// const ioServer = new Server(httpServer, { transports: ["websocket"] });
-
-const domain = "localhost";
-const port = 3001;
+app.use(
+	cors({
+		origin: ["http://localhost:3000", "http://localhost:3001"],
+	})
+);
 const httpServer = http.createServer(app);
-httpServer.listen(port, domain);
-const ioServer = Server.listen(httpServer, { transports: ["websocket"] });
+const ioServer = new Server(httpServer, {
+	// transports: ["websocket"],
+	cors: {
+		//@ts-ignore
+		origins: ["http://localhost:3000", "http://localhost:3001"],
+		handlePreflightRequest: (req: any, res: any) => {
+			res.writeHead(200, {
+				"Access-Control-Allow-Origin": "http://localhost:3000, http://localhost:3001",
+				"Access-Control-Allow-Methods": "GET,POST",
+				"Access-Control-Allow-Headers": "my-custom-header",
+				"Access-Control-Allow-Credentials": true,
+			});
+			res.end("ok");
+		},
+	},
+});
+
+// const domain = "localhost";
+// const port = 3001;
+// const httpServer = http.createServer(app);
+// httpServer.listen(port, domain);
+// const ioServer = Server.listen(httpServer, { transports: ["websocket"] });
 
 let manager: LobbyMananger = new LobbyMananger();
 
 ioServer.on("connection", (socket) => {
+	console.log(ioServer.sockets);
+	console.log("connection");
+
 	manager.createLobby("testLobby", 10);
 
 	manager.getLobby("testLobby").addUser(new User("client_" + socket.handshake.address, socket));
@@ -24,7 +48,7 @@ ioServer.on("connection", (socket) => {
 	console.log("Lobbies", manager.lobbies);
 	console.log("Users", manager.lobbies[0].users);
 
-	socket.emit("msg", "Welcome " + manager.getLobby("testLobby").users[0].name, (response) => {
+	socket.emit("msg", "Welcome " + manager.getLobby("testLobby").users[0].name, (response: any) => {
 		console.log(manager.getLobby("testLobby").users[0].name + " responded with: " + response);
 
 		manager.getLobby("testLobby").removeUser(manager.getLobby("testLobby").users[0]);
@@ -46,8 +70,8 @@ app.get("/", (req, res) => {
 	);
 });
 
-httpServer.listen(3000, () => {
-	console.log("listening on *:3000");
+httpServer.listen(8080, () => {
+	console.log("listening on *:8080");
 });
 
 export const yam = app;
