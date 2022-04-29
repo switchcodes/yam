@@ -2,11 +2,10 @@ import { Socket } from "socket.io";
 
 export default class User {
 	name: string;
-    connection: Socket;
+	connection: string;
 
-	constructor(name: string, connection: Socket) {
+	constructor(name: string, connection: string) {
 		this.name = name;
 		this.connection = connection;
 	}
 }
-

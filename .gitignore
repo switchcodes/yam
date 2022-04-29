@@ -8,3 +8,5 @@ coverage
 .env.*
 !.env.example
 .output
+.vscode
+package-lock.json
