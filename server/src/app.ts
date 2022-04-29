@@ -43,15 +43,15 @@ ioServer.on("connection", (socket) => {
 
 	manager.createLobby("testLobby", 10);
 
-	manager.getLobby("testLobby").addUser(new User("client_" + socket.handshake.address, socket));
+	manager.getLobby("testLobby")?.addUser(new User("client_" + socket.handshake.address, socket.id));
 
 	console.log("Lobbies", manager.lobbies);
 	console.log("Users", manager.lobbies[0].users);
 
-	socket.emit("msg", "Welcome " + manager.getLobby("testLobby").users[0].name, (response: any) => {
-		console.log(manager.getLobby("testLobby").users[0].name + " responded with: " + response);
+	socket.emit("msg", "Welcome " + manager.getLobby("testLobby")?.users[0].name, (response: any) => {
+		console.log(manager.getLobby("testLobby")?.users[0].name + " responded with: " + response);
 
-		manager.getLobby("testLobby").removeUser(manager.getLobby("testLobby").users[0]);
+		manager.getLobby("testLobby")?.removeUser(manager.getLobby("testLobby")?.users[0]!);
 
 		console.log("Lobbies", manager.lobbies);
 		console.log("Users", manager.lobbies[0].users);

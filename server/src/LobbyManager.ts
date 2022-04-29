@@ -1,4 +1,4 @@
-import Lobby from "./Lobby"
+import Lobby from "./Lobby";
 
 export default class LobbyMananger {
 	lobbies: Lobby[];
@@ -15,17 +15,17 @@ export default class LobbyMananger {
 		this.lobbies.filter((lobby) => lobby.name != lobbyName);
 	}
 
-	getLobby(lobbyName: string): Lobby {
-    let returnLobby: Lobby;
-		this.lobbies.forEach((lobby) =>{
-			if(lobby.name == lobbyName){
-        returnLobby = lobby;
-      }
+	getLobby(lobbyName: string): Lobby | null {
+		let returnLobby: Lobby | null = null;
+		this.lobbies.forEach((lobby) => {
+			if (lobby.name == lobbyName) {
+				returnLobby = lobby;
+			}
 		});
-    return returnLobby;
+		return returnLobby;
 	}
 
-	getLobbyCount(): number{
-    return this.lobbies.length;
+	getLobbyCount(): number {
+		return this.lobbies.length;
 	}
 }

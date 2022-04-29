@@ -7,19 +7,21 @@
 	],
 	"main": "app.ts",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
+		"dev": "ts-node-dev --respawn -- src/app.ts",
+		"build": "npx tsc --build tsconfig.json",
 		"test-watch": "vitest --watch",
 		"test": "vitest",
-		"coverage": "vitest run --converage"
+		"coverage": "vitest run --coverage"
 	},
 	"devDependencies": {
-		"@swc/core": "1.2.168",
+		"@types/cors": "^2.8.12",
 		"@types/express": "4.17.13",
+		"@types/node": "^17.0.30",
+		"c8": "^7.11.2",
+		"socket.io-mock-ts": "^1.0.2",
+		"ts-node-dev": "^1.1.8",
 		"typescript": "^4.6.3",
-		"vite": "2.9.5",
-		"vite-plugin-node": "0.0.19",
-		"vitest": "0.9.3"
+		"vitest": "^0.10.0"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",

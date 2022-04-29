@@ -1,4 +1,4 @@
-import {LobbyState} from "./LobbyState";
+import { LobbyState } from "./LobbyState";
 import User from "./User";
 
 export default class Lobby {
@@ -14,52 +14,51 @@ export default class Lobby {
 		this.state = LobbyState.CREATING;
 	}
 
-	addUser(user: User): boolean{
-    if(this.maxUsers == this.users.length) return false;
+	addUser(user: User): Boolean {
+		if (this.maxUsers == this.users.length) return false;
 		this.users.push(user);
-    return;
+		return true;
 	}
 
-  getUser(userName: string): User {
-    let returnUser: User;
-		this.users.forEach((user) =>{
-			if(user.name == userName){
-        returnUser = user;
-      }
+	getUser(userName: string): User | null {
+		let returnUser: User | null = null;
+		this.users.forEach((user) => {
+			if (user.name == userName) {
+				returnUser = user;
+			}
 		});
-    return returnUser;
+		return returnUser;
 	}
 
-  removeUser(userToRemove: User){
+	removeUser(userToRemove: User) {
 		this.users.filter((user) => user != userToRemove);
 	}
 
-  setMaxUsers(maxUsers: number){
-    this.maxUsers = maxUsers;
-  }
+	setMaxUsers(maxUsers: number) {
+		this.maxUsers = maxUsers;
+	}
 
-  getMaxUsers(): number{
-    return this.maxUsers;
-  }
+	getMaxUsers(): number {
+		return this.maxUsers;
+	}
 
-  setState(state: LobbyState){
-    this.state = state;
-  }
+	setState(state: LobbyState) {
+		this.state = state;
+	}
 
-  getState(): LobbyState{
-    return this.state;
-  }
+	getState(): LobbyState {
+		return this.state;
+	}
 
 	addAI = () => {
 		throw new Error("addAI() not implemented.");
 	};
 
-	join = (user) => {
+	join = (user: User) => {
 		throw new Error("addAI() not implemented.");
 	};
 
-	leave = (user) => {
+	leave = (user: User) => {
 		throw new Error("addAI() not implemented.");
 	};
 }
-
