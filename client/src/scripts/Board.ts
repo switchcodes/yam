@@ -25,6 +25,7 @@ export default class Board {
 		let mat = new MeshBasicMaterial({ color: 0xffffff });
 		let mesh = new Mesh(geo, mat);
 		mesh.translateX(0);
+		mesh.translateY(0.125);
 		mesh.translateZ(0);
 		mesh.rotateY(Math.PI / 2);
 		this.scene.add(mesh);
@@ -33,11 +34,11 @@ export default class Board {
 			"./src/assets/board/0.png",
 			(texture) => {
 				const fl = new FileLoader();
-				fl.load("./src/assets/shaders/fieldShader.vert", (vert) => {
-					fl.load("./src/assets/shaders/fieldShader.frag", (frag) => {
+				fl.load("./src/assets/shaders/testvert.vert", (vert) => {
+					fl.load("./src/assets/shaders/testfrag.frag", (frag) => {
 						console.log("texture loaded");
 						const material_shh = new ShaderMaterial({
-							uniforms: { tex: { value: texture } },
+							// uniforms: { tex: { value: texture } },
 							vertexShader: vert.toString(),
 							fragmentShader: frag.toString(),
 							glslVersion: GLSL3,

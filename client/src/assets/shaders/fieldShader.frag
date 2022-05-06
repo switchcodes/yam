@@ -15,7 +15,7 @@ void main() {
    vec4 c = vec4(0.64, 0.64, 0.64, 1.0);
    if(normals.y > 0.9) {
       c = vec4(texture(tex, vec2(vUv.y, vUv.x)).rgb, 1.0);
-      // c = vec4(1.0, 0.0, 0.0, 1.0);
+   //    // c = vec4(1.0, 0.0, 0.0, 1.0);
    }
    outColor = vec4(c);
 }

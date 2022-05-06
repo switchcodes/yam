@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
-import LobbyMananger from "./LobbyManager";
-import User from "./User";
+import routes from "./Routes";
+// import LobbyMananger from "./LobbyManager";
+// import User from "./User";
 
 const app = express();
 app.use(
@@ -35,33 +36,14 @@ const ioServer = new Server(httpServer, {
 // httpServer.listen(port, domain);
 // const ioServer = Server.listen(httpServer, { transports: ["websocket"] });
 
-let manager: LobbyMananger = new LobbyMananger();
+// let manager: LobbyMananger = new LobbyMananger();
 
-ioServer.on("connection", (socket) => {
-	console.log(ioServer.sockets);
-	console.log("connection");
+ioServer.on("connection", routes);
 
-	manager.createLobby("testLobby", 10);
-
-	manager.getLobby("testLobby")?.addUser(new User("client_" + socket.handshake.address, socket.id));
-
-	console.log("Lobbies", manager.lobbies);
-	console.log("Users", manager.lobbies[0].users);
-
-	socket.emit("msg", "Welcome " + manager.getLobby("testLobby")?.users[0].name, (response: any) => {
-		console.log(manager.getLobby("testLobby")?.users[0].name + " responded with: " + response);
-
-		manager.getLobby("testLobby")?.removeUser(manager.getLobby("testLobby")?.users[0]!);
-
-		console.log("Lobbies", manager.lobbies);
-		console.log("Users", manager.lobbies[0].users);
-
-		manager.deleteLobby("testLobby");
-
-		console.log("Lobbies", manager.lobbies);
-
-		socket.disconnect(true);
-	});
+ioServer.on("join", (socket) => {
+	console.log("join Event Called TOP LEVEL");
+	console.log("ServerSocket", ioServer.sockets);
+	console.log("Socket", socket);
 });
 
 app.get("/", (req, res) => {
@@ -73,5 +55,3 @@ app.get("/", (req, res) => {
 httpServer.listen(8080, () => {
 	console.log("listening on *:8080");
 });
-
-export const yam = app;
