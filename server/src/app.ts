@@ -44,6 +44,27 @@ ioServer.on("join", (socket) => {
 	console.log("join Event Called TOP LEVEL");
 	console.log("ServerSocket", ioServer.sockets);
 	console.log("Socket", socket);
+	manager.createLobby("testLobby", 10);
+
+	manager.getLobby("testLobby")?.addUser(new User("client_" + socket.handshake.address, socket.id));
+
+	console.log("Lobbies", manager.lobbies);
+	console.log("Users", manager.lobbies[0].users);
+
+	socket.emit("msg", "Welcome " + manager.getLobby("testLobby")?.users[0].name, (response: any) => {
+		console.log(manager.getLobby("testLobby")?.users[0].name + " responded with: " + response);
+
+		manager.getLobby("testLobby")?.removeUser(manager.getLobby("testLobby")?.users[0]!);
+
+		console.log("Lobbies", manager.lobbies);
+		console.log("Users", manager.lobbies[0].users);
+
+		manager.deleteLobby("testLobby");
+
+		console.log("Lobbies", manager.lobbies);
+
+		socket.disconnect(true);
+	});
 });
 
 app.get("/", (req, res) => {
