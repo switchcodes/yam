@@ -8,6 +8,7 @@ import {
 	Mesh,
 	TextureLoader,
 	SphereGeometry,
+	Group,
 } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -17,6 +18,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 // import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { createLines, addResize } from "./helperFunctions.js";
+import UI from "three-mesh-ui";
 
 export default class Game {
 	screen: HTMLElement;
@@ -24,7 +26,6 @@ export default class Game {
 	camera: PerspectiveCamera;
 	renderer: WebGLRenderer;
 	composer: EffectComposer;
-	// loader: TextureLoader;
 	constructor(screen: HTMLElement) {
 		// if (!screen) throw new Error("Screen needs to be defined in the DOM");
 		this.screen = screen;
@@ -44,19 +45,18 @@ export default class Game {
 		const renderPass = new RenderPass(this.scene, this.camera);
 		this.composer.addPass(renderPass);
 
-
 		// const fxaaPass = new ShaderPass(FXAAShader);
 		// this.composer.addPass(fxaaPass);
 
-		const bloomPass = new UnrealBloomPass(
-			new Vector2(window.innerWidth, window.innerHeight),
-			1.5,
-			0.4,
-			0.85
-		);
-		bloomPass.threshold = 0;
-		bloomPass.strength = 1.5;
-		bloomPass.radius = 0.3;
+		// const bloomPass = new UnrealBloomPass(
+		// 	new Vector2(window.innerWidth, window.innerHeight),
+		// 	1.5,
+		// 	0.4,
+		// 	0.85
+		// );
+		// bloomPass.threshold = 0;
+		// bloomPass.strength = 1.5;
+		// bloomPass.radius = 0.3;
 		// this.composer.addPass(bloomPass);
 
 		const controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -69,14 +69,33 @@ export default class Game {
 		// const cube = new Mesh(geometry, material);
 		// this.scene.add(cube);
 
+		const container = new UI.Block({
+			width: 0.88,
+			height: 0.33,
+			backgroundOpacity: 0.5,
+			fontFamily: "./src/assets/fonts/Roboto-msdf.json",
+			fontTexture: "./src/assets/fonts/Roboto-msdf.png",
+		});
+
+		const text = new UI.Text({
+			fontSize: 0.33,
+			content: "1.1M",
+		});
+		container.add(text);
+		container.translateY(0.251);
+		container.translateZ(0.5);
+		container.rotateX(-(Math.PI / 2));
+		this.scene.add(container);
+
 		this.animate();
 	}
 
 	animate() {
 		const animate = () => {
 			requestAnimationFrame(animate);
-
-			this.composer.render();
+			UI.update();
+			// this.composer.render();
+			this.renderer.render(this.scene, this.camera);
 		};
 		animate();
 	}
