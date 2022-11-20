@@ -18,7 +18,7 @@
 		"@swc/core": "1.2.168",
 		"@types/express": "4.17.13",
 		"vite": "2.9.6",
-		"vite-plugin-node": "0.0.19",
+		"vite-plugin-node": "1.0.0",
 		"vitest": "0.9.4"
 	},
 	"dependencies": {
