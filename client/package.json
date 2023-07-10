@@ -20,7 +20,7 @@
 		"@sveltejs/kit": "next",
 		"@types/three": "0.139.0",
 		"@typescript-eslint/eslint-plugin": "5.20.0",
-		"@typescript-eslint/parser": "5.19.0",
+		"@typescript-eslint/parser": "5.62.0",
 		"autoprefixer": "10.4.4",
 		"c8": "7.11.2",
 		"eslint": "7.32.0",
