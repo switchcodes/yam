@@ -39,7 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"socket.io-client": "4.4.1",
+		"socket.io-client": "4.8.0",
 		"three": "0.139.2"
 	}
 }
